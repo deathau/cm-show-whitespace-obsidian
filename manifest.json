@@ -1,0 +1,9 @@
+{
+  "id": "cm-show-whitespace-obsidian",
+  "name": "Show Whitespace",
+  "description": "Show whitespace in the editor",
+  "isDesktopOnly": false,
+  "js": "main.js",
+  "css": "styles.css",
+  "version": "0.0.1"
+}

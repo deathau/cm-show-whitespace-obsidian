@@ -1,0 +1,32 @@
+.cm-whitespace::before, .cm-tab::before {
+  position: absolute;
+  pointer-events: none;
+  color: var(--text-faint);
+  font-weight: normal;
+}
+
+.CodeMirror-code > div > pre > span::after, .CodeMirror-line > span::after {
+  pointer-events: none;
+  color: var(--text-faint);
+  content: "¬";
+  font-weight: normal;
+}
+.CodeMirror-code > div:last-child > pre > span::after {
+  display: none;
+}
+.cm-tab::before {
+  content: '→'
+}
+[class*=cm-trailing-space]::before {
+  content: "·";
+}
+
+$maximum: 16;
+$spaceChar: '.';
+$spaceChars: '';
+@for $i from 1 through $maximum {
+  $spaceChars: $spaceChars + $spaceChar;
+  .CodeMirror .cm-whitespace-#{$i}:not([class*="cm-trailing-space-"])::before {
+    content: '#{$spaceChars}';
+  }
+}
