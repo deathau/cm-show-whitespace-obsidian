@@ -1,15 +1,24 @@
-.cm-whitespace::before, .cm-tab::before {
+.cm-whitespace::before,
+.cm-tab::before,
+.CodeMirror-code>div>pre>span::after,
+.CodeMirror-line>span::after {
   position: absolute;
   pointer-events: none;
   color: var(--text-faint);
   font-weight: normal;
+  opacity: 0.5;
+}
+.cm-whitespace::before {
+  line-height: 1em;
+}
+.cm-s-obsidian span.cm-inline-code.cm-whitespace::before{
+  line-height: unset;
 }
 
 .CodeMirror-code > div > pre > span::after, .CodeMirror-line > span::after {
-  pointer-events: none;
-  color: var(--text-faint);
+  position: unset;
   content: "¬";
-  font-weight: normal;
+  line-height: 1em;
 }
 .CodeMirror-code > div:last-child > pre > span::after {
   display: none;
