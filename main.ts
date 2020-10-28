@@ -1,12 +1,12 @@
 import './styles.scss'
 import './cm-show-invisibles'
-import { App, Plugin, Modal, Notice, PluginSettingTab, Setting } from 'obsidian';
+import { Plugin, MarkdownView } from 'obsidian';
 
 export default class CMShowWhitespacePlugin extends Plugin {
 
   async onInit() {
     this.app.on("codemirror", cm => {
-      (cm as any).setOption("showInvisibles", true);
+      this.showInvisibles(cm);
     })
   }
 
@@ -24,11 +24,15 @@ export default class CMShowWhitespacePlugin extends Plugin {
 
   layoutReady = () => {
     const leaves = this.app.workspace.getLeavesOfType("markdown");
-    leaves.forEach((leaf: any) => {
-      if (leaf.view.sourceMode) {
-        leaf.view.sourceMode.cmEditor.setOption("showInvisibles", true);
+    leaves.forEach((leaf) => {
+      if (leaf.view instanceof MarkdownView) {
+        this.showInvisibles(leaf.view.sourceMode.cmEditor);
       }
-      else console.log(leaf);
     })
+  }
+
+  showInvisibles = (cm: CodeMirror.Editor) => {
+    // @ts-ignore
+    cm.setOption("showInvisibles", true);
   }
 }
