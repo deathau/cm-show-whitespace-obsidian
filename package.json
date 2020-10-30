@@ -1,6 +1,6 @@
 {
   "name": "cm-show-whitespace-obsidian",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Show whitespace in the editor",
   "main": "main.js",
   "scripts": {

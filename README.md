@@ -1,6 +1,8 @@
 # Show Whitespace Obsidian Plugin
 A plugin for [Obsidian](https://obsidian.md) which shows whitespace in the editor.
 
+![Screenshot](screenshot.png)
+
 Utilizes code from [cm-show-invisibles](https://github.com/coderaiser/cm-show-invisibles)
 by [coderaiser](https://github.com/coderaiser)
 

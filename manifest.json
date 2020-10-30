@@ -1,9 +1,8 @@
 {
   "id": "cm-show-whitespace-obsidian",
   "name": "Show Whitespace",
+  "author": "death_au",
   "description": "Show whitespace in the editor",
   "isDesktopOnly": false,
-  "js": "main.js",
-  "css": "styles.css",
-  "version": "v0.0.2"
+  "version": "v0.0.3"
 }

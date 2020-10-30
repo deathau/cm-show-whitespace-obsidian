@@ -8,7 +8,7 @@
   font-weight: normal;
   opacity: 0.5;
 }
-.cm-whitespace::before {
+.cm-whitespace:not(.cm-trailing-space-a):not(.cm-trailing-space-b):not(.cm-trailing-space-new-line)::before {
   line-height: 1em;
 }
 .cm-s-obsidian span.cm-inline-code.cm-whitespace::before{
