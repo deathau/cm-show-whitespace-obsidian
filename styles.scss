@@ -24,14 +24,14 @@
   display: none;
 }
 .cm-tab::before {
-  content: '→'
+  content: '→';
 }
 [class*=cm-trailing-space]::before {
   content: "·";
 }
 
 $maximum: 16;
-$spaceChar: '.';
+$spaceChar: '·';
 $spaceChars: '';
 @for $i from 1 through $maximum {
   $spaceChars: $spaceChars + $spaceChar;
