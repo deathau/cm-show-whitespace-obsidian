@@ -20,9 +20,12 @@ export default class CMShowWhitespacePlugin extends Plugin {
   }
 
   onunload() {
+    document.body.classList.remove('plugin-cm-show-whitespace');
   }
 
   layoutReady = () => {
+    document.body.classList.add('plugin-cm-show-whitespace');
+
     const leaves = this.app.workspace.getLeavesOfType("markdown");
     leaves.forEach((leaf) => {
       if (leaf.view instanceof MarkdownView) {

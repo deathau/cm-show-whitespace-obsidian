@@ -1,41 +1,58 @@
-.cm-whitespace::before,
-.cm-tab::before,
-.CodeMirror-code>div>pre>span::after,
-.CodeMirror-line>span::after {
-  position: absolute;
-  pointer-events: none;
-  color: var(--text-faint);
-  font-weight: normal;
-  opacity: 0.5;
-}
-.cm-whitespace:not(.cm-trailing-space-a):not(.cm-trailing-space-b):not(.cm-trailing-space-new-line)::before {
-  line-height: 1em;
-}
-.cm-s-obsidian span.cm-inline-code.cm-whitespace::before{
-  line-height: unset;
-}
-
-.CodeMirror-code > div > pre > span::after, .CodeMirror-line > span::after {
-  position: unset;
-  content: "¬";
-  line-height: 1em;
-}
-.CodeMirror-code > div:last-child > pre > span::after {
-  display: none;
-}
-.cm-tab::before {
-  content: '→'
-}
-[class*=cm-trailing-space]::before {
-  content: "·";
-}
-
 $maximum: 16;
-$spaceChar: '.';
-$spaceChars: '';
-@for $i from 1 through $maximum {
-  $spaceChars: $spaceChars + $spaceChar;
-  .CodeMirror .cm-whitespace-#{$i}:not([class*="cm-trailing-space-"])::before {
-    content: '#{$spaceChars}';
+
+body.plugin-cm-show-whitespace {
+
+  /* feel free to override these characters if you want */
+  --spaceChar: '·';
+  --tabChar: '→';
+  --newlineChar: '¬';
+
+  // general styling
+  .cm-whitespace::before,
+  .cm-tab::before,
+  .CodeMirror-code>div>pre>span::after,
+  .CodeMirror-line>span::after {
+    pointer-events: none;
+    color: var(--text-faint);
+    font-weight: normal;
+    opacity: 0.5;
+  }
+  
+  // char replacements
+  [class*=cm-trailing-space]::before {
+    content: var(--spaceChar);
+  }
+  
+  .cm-tab::before {
+    content: var(--tabChar);
+  }
+
+  .CodeMirror-code>div>pre>span::after,
+  .CodeMirror-line>span::after {
+    content: var(--newlineChar);
+    position: unset;
+  }
+
+  // general fixes
+  .cm-whitespace::before,
+  .cm-tab::before {
+    position: absolute;
+  }
+  .cm-s-obsidian span.cm-inline-code.cm-whitespace::before {
+    line-height: 2em; // <- Why? I don't know. Don't like it, but it works.
+  }
+
+  .CodeMirror-code > div:last-child > pre > span::after {
+    display: none;
+  }
+
+
+  $spaceChar: var(--spaceChar);
+  $spaceChars: $spaceChar;
+  @for $i from 1 through $maximum {
+    .CodeMirror .cm-whitespace-#{$i}:not([class*="cm-trailing-space-"])::before {
+      content: #{$spaceChars};
+      $spaceChars: $spaceChars + ' ' + $spaceChar;
+    }
   }
 }
