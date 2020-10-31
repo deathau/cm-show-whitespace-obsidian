@@ -17,6 +17,8 @@ This is all very expermental at the moment, so parts might not work, etc.
 There are certain css classes, etc that can interfere with it and make the whitespace characters stand out more.  
 Check out the styles.css in the release to see what styles are added to be customized.
 
+You can override the CSS variables for `--spaceChar`, `--tab-char` and `--newlineChar` in your custom CSS to use different characters if you wish.
+
 ## Installation
 
 ### From within Obsidian
@@ -65,3 +67,22 @@ However, if you absolutely *have* to send me money because you like it that
 much, feel free to throw some coins in my hat via
 [PayPal](https://paypal.me/deathau) or sponsor me via
 [GitHub Sponsors](https://github.com/sponsors/deathau)
+
+# Version History
+## 0.1.0
+- Added a global body class so that styling is not applied when the plugin is off
+- More minor fixes to make space dots in the middle
+- Overridable CSS variables for `--spaceChar`, `--tab-char` and `--newlineChar`
+
+## v0.0.3
+- Fixed end of line spaces to be on the same level as others
+- Added a screenshot to the readme
+
+This is my first real release utilizing automation 🤞
+
+## v0.0.2
+styling fixes to center space dots and adjust colours
+
+## v0.0.1
+Initial Release!  
+No fancy settings or anything, just turn it on or off through the third party plugin settings
