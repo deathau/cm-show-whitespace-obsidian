@@ -17,7 +17,7 @@ This is all very expermental at the moment, so parts might not work, etc.
 There are certain css classes, etc that can interfere with it and make the whitespace characters stand out more.  
 Check out the styles.css in the release to see what styles are added to be customized.
 
-You can override the CSS variables for `--spaceChar`, `--tab-char` and `--newlineChar` in your custom CSS to use different characters if you wish.
+You can override the CSS variables for `--spaceChar`, `--tabChar` and `--newlineChar` in your custom CSS to use different characters if you wish.
 
 ## Installation
 
