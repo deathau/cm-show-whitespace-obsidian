@@ -69,6 +69,10 @@ much, feel free to throw some coins in my hat via
 [GitHub Sponsors](https://github.com/sponsors/deathau)
 
 # Version History
+## v0.2.0
+- Added ability to toggle the setting via a command
+You can bind your own hotkey to this if you wish.
+
 ## 0.1.0
 - Added a global body class so that styling is not applied when the plugin is off
 - More minor fixes to make space dots in the middle
