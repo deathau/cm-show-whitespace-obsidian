@@ -4,38 +4,64 @@ import { Plugin, MarkdownView } from 'obsidian';
 
 export default class CMShowWhitespacePlugin extends Plugin {
 
+  settings: any;
   async onInit() {
-    this.app.on("codemirror", cm => {
-      this.showInvisibles(cm);
-    })
+    
   }
 
   async onload() {
-    if ((this.app.workspace as any).layoutReady) {
-      this.layoutReady();
+    this.settings = await this.loadData() || { enabled: true } as any;
+    if (this.settings.enabled) {
+      (this.app.workspace as any).layoutReady ? this.enable() : this.app.workspace.on('layout-ready', this.enable);
     }
-    else {
-      this.app.workspace.on('layout-ready', this.layoutReady);
-    }
+
+    // add the toggle on/off command
+    this.addCommand({
+      id: 'toggle-show-whitespace',
+      name: 'Toggle On/Off',
+      callback: () => {
+        // disable or enable as necessary
+        this.settings.enabled ? this.disable() : this.enable();
+      }
+    });
   }
 
   onunload() {
+    this.disable();
+  }
+  
+  disable = () => {
     document.body.classList.remove('plugin-cm-show-whitespace');
+
+    // this.app.workspace.getLeavesOfType("markdown").forEach((leaf) => {
+    //   if (leaf.view instanceof MarkdownView) {
+    //     this.showInvisibles(leaf.view.sourceMode.cmEditor, false);
+    //   }
+    // })
+
+    this.app.off("codemirror", this.showInvisibles);
+
+    this.settings.enabled = false;
+    this.saveData(this.settings);
   }
 
-  layoutReady = () => {
+  enable = () => {
     document.body.classList.add('plugin-cm-show-whitespace');
 
-    const leaves = this.app.workspace.getLeavesOfType("markdown");
-    leaves.forEach((leaf) => {
+    this.app.on("codemirror", this.showInvisibles);
+
+    this.app.workspace.getLeavesOfType("markdown").forEach((leaf) => {
       if (leaf.view instanceof MarkdownView) {
         this.showInvisibles(leaf.view.sourceMode.cmEditor);
       }
     })
+
+    this.settings.enabled = true;
+    this.saveData(this.settings);
   }
 
-  showInvisibles = (cm: CodeMirror.Editor) => {
+  showInvisibles = (cm: CodeMirror.Editor, enable: boolean = true) => {
     // @ts-ignore
-    cm.setOption("showInvisibles", true);
+    cm.setOption("showInvisibles", enable);
   }
 }
