@@ -15,6 +15,10 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: '14.x' # You might need to adjust this value to your own version
+    - name: Get Version
+      id: version
+      run: |
+        echo "::set-output name=tag::$(git describe --abbrev=0)"
     # Build the plugin
     - name: Build
       id: build
