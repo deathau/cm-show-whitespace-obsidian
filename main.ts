@@ -29,6 +29,7 @@ export default class CMShowWhitespacePlugin extends Plugin {
 
   async onload() {
     await this.loadSettings();
+    this.updateHiddenChars();
 
     if (this.settings.enabled) {
       (this.app.workspace as any).layoutReady ? this.enable() : this.app.workspace.on('layout-ready', this.enable);
