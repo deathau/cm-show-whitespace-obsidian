@@ -152,7 +152,6 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
       )
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showSpace).onChange(async (value) => {
-          console.log('show space has changed', value);
           this.plugin.settings.showSpace = value;
           this.plugin.settings.showSingleSpace = value;
           await this.plugin.saveSettings();
@@ -164,7 +163,6 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
       .setDesc('Show or hide single space characters')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.showSingleSpace).onChange(async (value) => {
-          console.log('show single space has changed', value);
           this.plugin.settings.showSingleSpace = value;
           await this.plugin.saveSettings();
         });
@@ -179,7 +177,6 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
       .setDesc('Show or hide trailing space characters')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showTrailingSpace).onChange(async (value) => {
-          console.log('show trailing space has changed', value);
           this.plugin.settings.showTrailingSpace = value;
           await this.plugin.saveSettings();
         })
@@ -191,7 +188,6 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
       .setDesc('Show or hide the newline character')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showNewline).onChange(async (value) => {
-          console.log('show newline has changed', value);
           this.plugin.settings.showNewline = value;
           await this.plugin.saveSettings();
         })
@@ -201,7 +197,6 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
       .setDesc('Show or hide the tab character')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showTab).onChange(async (value) => {
-          console.log('show tab has changed', value);
           this.plugin.settings.showTab = value;
           await this.plugin.saveSettings();
         })
