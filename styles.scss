@@ -1,11 +1,41 @@
 $maximum: 16;
 
+.plugin-cm-show-whitespace-settings {
+  .plugin-cm-show-whitespace-disabled {
+    opacity: 0.6;
+
+    .checkbox-container {
+      cursor: not-allowed;
+      // this is *not* an adequate way to disable an input but it's all we can do right now
+      pointer-events: none;
+    }
+  }
+}
+
 body.plugin-cm-show-whitespace {
 
   /* feel free to override these characters if you want */
   --spaceChar: '·';
+  --trailingSpaceChar: '·';
+  --singleSpaceChar: var(--spaceChar);
   --tabChar: '→';
   --newlineChar: '¬';
+
+  &.plugin-cm-show-whitespace-hide-space {
+    --spaceChar: '';
+  }
+  &.plugin-cm-show-whitespace-hide-tab {
+    --tabChar: '';
+  }
+  &.plugin-cm-show-whitespace-hide-newline {
+    --newlineChar: '';
+  }
+  &.plugin-cm-show-whitespace-hide-single-space {
+    --singleSpaceChar: '';
+  }
+  &.plugin-cm-show-whitespace-hide-trailing-space {
+    --trailingSpaceChar: '';
+  }
 
   // general styling
   .cm-whitespace::before,
@@ -20,7 +50,7 @@ body.plugin-cm-show-whitespace {
   
   // char replacements
   [class*=cm-trailing-space]::before {
-    content: var(--spaceChar);
+    content: var(--trailingSpaceChar);
   }
   
   .cm-tab::before {
@@ -47,12 +77,21 @@ body.plugin-cm-show-whitespace {
   }
 
 
+  .CodeMirror .cm-whitespace-1:not([class*="cm-trailing-space-"])::before {
+    // specify this before the loop to allow styling single spaces differently
+    content: var(--singleSpaceChar);
+  }
   $spaceChar: var(--spaceChar);
-  $spaceChars: $spaceChar;
-  @for $i from 1 through $maximum {
+  $spaceChars: $spaceChar + ' ' + $spaceChar;
+  @for $i from 2 through $maximum {
     .CodeMirror .cm-whitespace-#{$i}:not([class*="cm-trailing-space-"])::before {
       content: #{$spaceChars};
       $spaceChars: $spaceChars + ' ' + $spaceChar;
     }
+  }
+
+  .CodeMirror .cm-whitespace-1:last-of-type::before {
+    // for some reason a single trailing space doesn't get the `cm-trailing-space` class
+    content: var(--trailingSpaceChar);
   }
 }
