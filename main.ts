@@ -39,7 +39,7 @@ export default class CMShowWhitespacePlugin extends Plugin {
     //   }
     // })
 
-    this.app.off("codemirror", this.showInvisibles);
+    this.app.workspace.off("codemirror", this.showInvisibles);
 
     this.settings.enabled = false;
     this.saveData(this.settings);
@@ -48,7 +48,7 @@ export default class CMShowWhitespacePlugin extends Plugin {
   enable = () => {
     document.body.classList.add('plugin-cm-show-whitespace');
 
-    this.app.on("codemirror", this.showInvisibles);
+    this.app.workspace.on("codemirror", this.showInvisibles);
 
     this.app.workspace.getLeavesOfType("markdown").forEach((leaf) => {
       if (leaf.view instanceof MarkdownView) {
