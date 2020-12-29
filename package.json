@@ -13,7 +13,7 @@
   "author": "death_au",
   "repository": {
     "type": "git",
-    "url": "https://github.com/deathau/cm-editor-syntax-highlight-obsidian"
+    "url": "https://github.com/deathau/cm-show-whitespace-obsidian"
   },
   "license": "MIT",
   "devDependencies": {
