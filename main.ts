@@ -115,28 +115,27 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
         toggle.setValue(this.plugin.settings.enabled)
           .onChange((newValue) => { newValue ? this.plugin.enable() : this.plugin.disable() })
       );
-
+    
+    // ---
     new Setting(containerEl).setHeading().setName('Spaces');
+    // ---
+
     new Setting(containerEl)
       .setName('Show space characters')
-      .setDesc(
-        'Show or hide the space character. Note: This will also hide single space characters.'
-      )
+      .setDesc('Show or hide the space character. Note: This will also hide single space characters.')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showSpace).onChange(async (value) => {
-          this.plugin.settings.showSpace = value;
-          this.plugin.settings.showSingleSpace = value;
-          await this.plugin.saveSettings();
+          await this.plugin.saveSettings({ showSpace: value, showSingleSpace: value});
           this.display();
         })
-      );
+    );
+    
     const singleSpaceSetting = new Setting(containerEl)
       .setName('Show single space characters')
       .setDesc('Show or hide single space characters')
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.showSingleSpace).onChange(async (value) => {
-          this.plugin.settings.showSingleSpace = value;
-          await this.plugin.saveSettings();
+          await this.plugin.saveSettings({ showSingleSpace: value });
         });
       });
     if (!settings.showSpace) {
@@ -144,42 +143,44 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
       // to show or hide single spaces between words
       singleSpaceSetting.setClass('plugin-cm-show-whitespace-disabled');
     }
+
     new Setting(containerEl)
       .setName('Show trailing space characters')
       .setDesc('Show or hide trailing space characters')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showTrailingSpace).onChange(async (value) => {
-          this.plugin.settings.showTrailingSpace = value;
-          await this.plugin.saveSettings();
+          await this.plugin.saveSettings({ showTrailingSpace: value});
         })
       );
 
+    // ---
     new Setting(containerEl).setHeading().setName('Other whitespace characters');
+    // ---
+
     new Setting(containerEl)
       .setName('Show newline characters')
       .setDesc('Show or hide the newline character')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showNewline).onChange(async (value) => {
-          this.plugin.settings.showNewline = value;
-          await this.plugin.saveSettings();
+          await this.plugin.saveSettings({ showNewline: value });
         })
     );
+    
     new Setting(containerEl)
       .setName('Show strict line break characters')
       .setDesc('Show or hide a different character for strict line breaks (two spaces followed by new line)')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showStrictLineBreak).onChange(async (value) => {
-          this.plugin.settings.showStrictLineBreak = value;
-          await this.plugin.saveSettings();
+          await this.plugin.saveSettings({ showStrictLineBreak: value });
         })
-      );
+    );
+    
     new Setting(containerEl)
       .setName('Show tab characters')
       .setDesc('Show or hide the tab character')
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showTab).onChange(async (value) => {
-          this.plugin.settings.showTab = value;
-          await this.plugin.saveSettings();
+          await this.plugin.saveSettings({ showTab: value });
         })
       );
   }
