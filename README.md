@@ -75,6 +75,9 @@ much, feel free to throw some coins in my hat via
 [GitHub Sponsors](https://github.com/sponsors/deathau)
 
 # Version History
+## 0.3.1
+- Fix to prevent throwing an error when toggling off
+
 ## 0.3.0
 - Fixed the issue of being unable to toggle the plugin
 - Added a bunch of new settings (thanks to jjspace for providing these!)

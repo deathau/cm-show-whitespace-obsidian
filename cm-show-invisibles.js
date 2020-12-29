@@ -5,7 +5,7 @@ CodeMirror.defineOption('showInvisibles', false, (cm, val, prev) => {
     prev = false;
   if (prev && !val) {
     cm.removeOverlay('invisibles');
-    return rm();
+    return;
   }
   if (!prev && val) {
     //add(Maximum);
