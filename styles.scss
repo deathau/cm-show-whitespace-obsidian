@@ -72,7 +72,8 @@ body.plugin-cm-show-whitespace {
     line-height: 2em; // <- Why? I don't know. Don't like it, but it works.
   }
 
-  .CodeMirror-code > div:last-child > pre > span::after {
+  .CodeMirror-code > div:last-child > pre > span::after,
+  .CodeMirror-code > pre:last-child > span::after {
     display: none;
   }
 
