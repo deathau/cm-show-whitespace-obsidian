@@ -9,6 +9,7 @@ interface CMShowWhitespacePluginSettings {
   showSpace: boolean;
   showSingleSpace: boolean;
   showTrailingSpace: boolean;
+  showStrictLineBreak: boolean;
 }
 
 const DEFAULT_SETTINGS: CMShowWhitespacePluginSettings = {
@@ -18,6 +19,7 @@ const DEFAULT_SETTINGS: CMShowWhitespacePluginSettings = {
   showSpace: true,
   showSingleSpace: true,
   showTrailingSpace: true,
+  showStrictLineBreak: false
 };
     
 export default class CMShowWhitespacePlugin extends Plugin {
@@ -67,7 +69,7 @@ export default class CMShowWhitespacePlugin extends Plugin {
   }
 
   updateHiddenChars = () => {
-    const { showNewline, showSingleSpace, showSpace, showTab, showTrailingSpace } = this.settings;
+    const { showNewline, showSingleSpace, showSpace, showTab, showTrailingSpace, showStrictLineBreak } = this.settings;
     const classList = document.body.classList;
 
     classList.toggle('plugin-cm-show-whitespace-hide-newline', !showNewline);
@@ -75,6 +77,7 @@ export default class CMShowWhitespacePlugin extends Plugin {
     classList.toggle('plugin-cm-show-whitespace-hide-space', !showSpace);
     classList.toggle('plugin-cm-show-whitespace-hide-single-space', !showSingleSpace);
     classList.toggle('plugin-cm-show-whitespace-hide-trailing-space', !showTrailingSpace);
+    classList.toggle('plugin-cm-show-whitespace-show-strict-line-break', showStrictLineBreak);
   }
 
   async loadSettings() {
@@ -158,6 +161,15 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
       .addToggle((toggle) =>
         toggle.setValue(this.plugin.settings.showNewline).onChange(async (value) => {
           this.plugin.settings.showNewline = value;
+          await this.plugin.saveSettings();
+        })
+    );
+    new Setting(containerEl)
+      .setName('Show strict line break characters')
+      .setDesc('Show or hide a different character for strict line breaks (two spaces followed by new line)')
+      .addToggle((toggle) =>
+        toggle.setValue(this.plugin.settings.showStrictLineBreak).onChange(async (value) => {
+          this.plugin.settings.showStrictLineBreak = value;
           await this.plugin.saveSettings();
         })
       );

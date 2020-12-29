@@ -20,6 +20,7 @@ body.plugin-cm-show-whitespace {
   --singleSpaceChar: var(--spaceChar);
   --tabChar: '→';
   --newlineChar: '¬';
+  --strictLineBreakChar: var(--newlineChar);
 
   &.plugin-cm-show-whitespace-hide-space {
     --spaceChar: '';
@@ -36,12 +37,16 @@ body.plugin-cm-show-whitespace {
   &.plugin-cm-show-whitespace-hide-trailing-space {
     --trailingSpaceChar: '';
   }
+  &.plugin-cm-show-whitespace-show-strict-line-break {
+    --strictLineBreakChar: '↲';
+  }
 
   // general styling
   .cm-whitespace::before,
   .cm-tab::before,
-  .CodeMirror-code>div>pre>span::after,
-  .CodeMirror-line>span::after {
+  .CodeMirror-code>div>pre>span>:last-child:after,
+  .CodeMirror-line>span>:last-child::after,
+  [class*=cm-trailing-space]+[class*=cm-trailing-space]:last-child::after {
     pointer-events: none;
     color: var(--text-faint);
     font-weight: normal;
@@ -57,9 +62,14 @@ body.plugin-cm-show-whitespace {
     content: var(--tabChar);
   }
 
-  .CodeMirror-code>div>pre>span::after,
-  .CodeMirror-line>span::after {
+  .CodeMirror-code>div>pre>span>:last-child:after,
+  .CodeMirror-line>span>:last-child::after {
     content: var(--newlineChar);
+    position: unset;
+  }
+
+  [class*=cm-trailing-space]+[class*=cm-trailing-space]:last-child::after {
+    content: var(--strictLineBreakChar);
     position: unset;
   }
 
