@@ -1,6 +1,6 @@
 import './styles.scss'
 import './cm-show-invisibles'
-import { Plugin, MarkdownView, PluginSettingTab, App, Setting } from 'obsidian';
+import { Plugin, PluginSettingTab, App, Setting } from 'obsidian';
 
 interface CMShowWhitespacePluginSettings {
   enabled: boolean;
@@ -23,13 +23,9 @@ const DEFAULT_SETTINGS: CMShowWhitespacePluginSettings = {
 export default class CMShowWhitespacePlugin extends Plugin {
 
   settings: CMShowWhitespacePluginSettings;
-  async onInit() {
-    
-  }
 
   async onload() {
     await this.loadSettings();
-    this.updateHiddenChars();
 
     if (this.settings.enabled) {
       (this.app.workspace as any).layoutReady ? this.enable() : this.app.workspace.on('layout-ready', this.enable);
@@ -51,78 +47,42 @@ export default class CMShowWhitespacePlugin extends Plugin {
   onunload() {
     this.disable();
   }
-  
+
   disable = () => {
     document.body.classList.remove('plugin-cm-show-whitespace');
 
-    // this.app.workspace.getLeavesOfType("markdown").forEach((leaf) => {
-    //   if (leaf.view instanceof MarkdownView) {
-    //     this.showInvisibles(leaf.view.sourceMode.cmEditor, false);
-    //   }
-    // })
+    // @ts-ignore
+    this.app.workspace.iterateCodeMirrors(cm => cm.setOption("showInvisibles", false));
 
-    this.app.workspace.off("codemirror", this.showInvisibles);
-
-    this.settings.enabled = false;
-    this.saveData(this.settings);
+    this.saveSettings({enabled:false});
   }
 
   enable = () => {
     document.body.classList.add('plugin-cm-show-whitespace');
 
-    this.app.workspace.on("codemirror", this.showInvisibles);
-
-    this.app.workspace.getLeavesOfType("markdown").forEach((leaf) => {
-      if (leaf.view instanceof MarkdownView) {
-        this.showInvisibles(leaf.view.sourceMode.cmEditor);
-      }
-    })
-
-    this.settings.enabled = true;
-    this.saveData(this.settings);
-  }
-
-  showInvisibles = (cm: CodeMirror.Editor, enable: boolean = true) => {
     // @ts-ignore
-    cm.setOption("showInvisibles", enable);
+    this.registerCodeMirror(cm => cm.setOption("showInvisibles", true));
+
+    this.saveSettings({enabled:true});
   }
 
   updateHiddenChars = () => {
     const { showNewline, showSingleSpace, showSpace, showTab, showTrailingSpace } = this.settings;
-    const body = document.body;
+    const classList = document.body.classList;
 
-    if (showNewline) {
-      body.classList.remove('plugin-cm-show-whitespace-hide-newline');
-    } else {
-      body.classList.add('plugin-cm-show-whitespace-hide-newline');
-    }
-    if (showTab) {
-      body.classList.remove('plugin-cm-show-whitespace-hide-tab');
-    } else {
-      body.classList.add('plugin-cm-show-whitespace-hide-tab');
-    }
-    if (showSpace) {
-      body.classList.remove('plugin-cm-show-whitespace-hide-space');
-    } else {
-      body.classList.add('plugin-cm-show-whitespace-hide-space');
-    }
-    if (showSingleSpace) {
-      body.classList.remove('plugin-cm-show-whitespace-hide-single-space');
-    } else {
-      body.classList.add('plugin-cm-show-whitespace-hide-single-space');
-    }
-    if (showTrailingSpace) {
-      body.classList.remove('plugin-cm-show-whitespace-hide-trailing-space');
-    } else {
-      body.classList.add('plugin-cm-show-whitespace-hide-trailing-space');
-    }
+    classList.toggle('plugin-cm-show-whitespace-hide-newline', !showNewline);
+    classList.toggle('plugin-cm-show-whitespace-hide-tab', !showTab);
+    classList.toggle('plugin-cm-show-whitespace-hide-space', !showSpace);
+    classList.toggle('plugin-cm-show-whitespace-hide-single-space', !showSingleSpace);
+    classList.toggle('plugin-cm-show-whitespace-hide-trailing-space', !showTrailingSpace);
   }
 
   async loadSettings() {
     this.settings = Object.assign(DEFAULT_SETTINGS, await this.loadData());
   }
 
-  async saveSettings() {
+  async saveSettings(newSettings = {}) {
+    this.settings = Object.assign(this.settings, newSettings);
     await this.saveData(this.settings);
     this.updateHiddenChars();
   }
@@ -144,6 +104,14 @@ class CMShowWhitespacePluginSettingTab extends PluginSettingTab {
 
     containerEl.empty();
     containerEl.classList.add('plugin-cm-show-whitespace-settings');
+
+    new Setting(containerEl)
+      .setName("Toggle Show Whitespace")
+      .setDesc("Turns show whitespace on or off globally")
+      .addToggle(toggle =>
+        toggle.setValue(this.plugin.settings.enabled)
+          .onChange((newValue) => { newValue ? this.plugin.enable() : this.plugin.disable() })
+      );
 
     new Setting(containerEl).setHeading().setName('Spaces');
     new Setting(containerEl)
