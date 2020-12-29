@@ -2,7 +2,9 @@
   "id": "cm-show-whitespace-obsidian",
   "name": "Show Whitespace",
   "author": "death_au",
+  "authorUrl": "https://github.com/deathau",
   "description": "Show whitespace in the editor",
   "isDesktopOnly": false,
-  "version": "v0.2.0"
+  "version": "v0.2.0",
+  "minAppVersion": "0.10.0"
 }

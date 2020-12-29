@@ -10,7 +10,7 @@ by [coderaiser](https://github.com/coderaiser)
 
 Custom plugins are only available for Obsidian v0.9.7+.
 
-The current API of this repo targets Obsidian **v0.9.7**. 
+The current API of this repo targets Obsidian **v0.10.0**. 
 
 ### Notes
 This is all very expermental at the moment, so parts might not work, etc.  
@@ -69,6 +69,16 @@ much, feel free to throw some coins in my hat via
 [GitHub Sponsors](https://github.com/sponsors/deathau)
 
 # Version History
+## 0.3.0
+- Fixed the issue of being unable to toggle the plugin
+- Added a bunch of new settings (thanks to jjspace for providing these!)
+  - Show/hide space characters
+  - Show/hide single space characters
+  - Show/hide trailing space characters
+  - Show/hide newline characters
+  - Show/hide tab characters
+- Also added a setting for show/hide "strict" line break characters (two spaces followed by a newline)
+
 ## v0.2.0
 - Added ability to toggle the setting via a command
 You can bind your own hotkey to this if you wish.
