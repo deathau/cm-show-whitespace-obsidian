@@ -25,6 +25,14 @@ You can override the following CSS variables in your custom CSS to use different
   - `--newlineChar`
   - `--strictLineBreakChar`
 
+Example:
+
+```css
+body.plugin-cm-show-whitespace {
+  --strictLineBreakChar: "↲" !important;
+}
+```
+
 ## Installation
 
 ### From within Obsidian
